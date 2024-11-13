@@ -1,5 +1,7 @@
 
 
+# Inside deployment.yaml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +18,7 @@ spec:
     spec:
       containers:
         - name: flask-app-container
-          image: africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image@sha256:7d3c41f0e6ae0141a4515c8ccf71100661c2b2e053c1af6b91a5b59f13e8c82e
+          image: africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image
           ports:
             - containerPort: 8080
           resources:
