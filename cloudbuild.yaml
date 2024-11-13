@@ -1,23 +1,23 @@
 
 
-# cloudbuild.yaml
+
 options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  # Authenticate with GKE cluster
+  # Step 1: Authenticate with the GKE cluster using the correct cluster name and region
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['container', 'clusters', 'get-credentials', 'my-autopilot-cluster', '--region', 'africa-south1', '--project', 'terraform-demo-438211']
-  
-  # Build Docker image
+    args: ['container', 'clusters', 'get-credentials', 'autopilot-cluster', '--region', 'africa-south1', '--project', 'terraform-demo-438211']
+
+  # Step 2: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image', '.']
-  
-  # Push Docker image to Artifact Registry in africa-south1
+
+  # Step 3: Push Docker image to Artifact Registry in africa-south1
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image']
-  
-  # Update deployment in GKE with new image
+
+  # Step 4: Set the image in the GKE deployment
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
       - 'set'
@@ -28,10 +28,10 @@ steps:
       - 'CLOUDSDK_COMPUTE_REGION=africa-south1'
       - 'CLOUDSDK_CORE_PROJECT=terraform-demo-438211'
 
-  # Apply deployment.yaml to deploy the application
+  # Step 5: Apply deployment.yaml to deploy the application
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'deployment.yaml']
 
-  # Apply loadbalancer.yaml to create the LoadBalancer service
+  # Step 6: Apply loadbalancer.yaml to create the LoadBalancer service
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'loadbalancer.yaml']
