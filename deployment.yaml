@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: flask-app-container
-          image: africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image:@sha256:8c991289bf75a71af294067a02c0fb772da4f522d69d24cfc819ba5ce13ac7cc
+          image: africa-south1-docker.pkg.dev/terraform-demo-438211/gke-artifacts/flask-app-image@sha256:8c991289bf75a71af294067a02c0fb772da4f522d69d24cfc819ba5ce13ac7cc
           ports:
             - containerPort: 8080
           resources:
@@ -26,5 +26,3 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "500m"
-
-
